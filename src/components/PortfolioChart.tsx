@@ -16,26 +16,26 @@ export function PortfolioChart() {
     <div className="h-48">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
           <XAxis 
             dataKey="month" 
             axisLine={false}
             tickLine={false}
-            tick={{ fontSize: 12, fill: '#6b7280' }}
+            tick={{ fontSize: 12, fill: '#94a3b8' }}
           />
           <YAxis 
             axisLine={false}
             tickLine={false}
-            tick={{ fontSize: 12, fill: '#6b7280' }}
+            tick={{ fontSize: 12, fill: '#94a3b8' }}
             tickFormatter={(value) => `$${value}`}
           />
           <Line 
             type="monotone" 
             dataKey="pnl" 
-            stroke="#1e40af" 
+            stroke="#3b82f6" 
             strokeWidth={3}
-            dot={{ r: 4, fill: '#1e40af' }}
-            activeDot={{ r: 6, fill: '#1d4ed8' }}
+            dot={{ r: 4, fill: '#3b82f6' }}
+            activeDot={{ r: 6, fill: '#2563eb' }}
           />
         </LineChart>
       </ResponsiveContainer>

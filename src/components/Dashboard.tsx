@@ -90,14 +90,14 @@ export function Dashboard() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Earnings Dashboard</h1>
-          <p className="text-slate-600">Track and execute calendar spread opportunities</p>
+          <h1 className="text-2xl font-bold text-slate-100">Earnings Dashboard</h1>
+          <p className="text-slate-400">Track and execute calendar spread opportunities</p>
         </div>
         <div className="flex items-center space-x-2 mt-4 md:mt-0">
-          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+          <Badge variant="outline" className="bg-green-500/20 text-green-400 border-green-500/50">
             Market Open
           </Badge>
-          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+          <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-500/50">
             Earnings Season
           </Badge>
         </div>
@@ -106,15 +106,15 @@ export function Dashboard() {
       {/* Portfolio Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {portfolioStats.map((stat, index) => (
-          <Card key={index} className="card-shadow hover:shadow-md transition-shadow">
+          <Card key={index} className="card-shadow hover:shadow-xl transition-shadow bg-slate-800 border-slate-700">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-slate-600">{stat.title}</p>
-                  <p className="text-2xl font-bold text-slate-900 mt-1">{stat.value}</p>
+                  <p className="text-sm font-medium text-slate-400">{stat.title}</p>
+                  <p className="text-2xl font-bold text-slate-100 mt-1">{stat.value}</p>
                   <p className="text-xs text-slate-500 mt-1">{stat.change}</p>
                 </div>
-                <div className={`p-3 rounded-lg bg-slate-50 ${stat.color}`}>
+                <div className={`p-3 rounded-lg bg-slate-700 ${stat.color}`}>
                   <stat.icon className="w-5 h-5" />
                 </div>
               </div>
@@ -126,11 +126,11 @@ export function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Earnings Opportunities */}
         <div className="lg:col-span-2">
-          <Card className="card-shadow">
+          <Card className="card-shadow bg-slate-800 border-slate-700">
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-semibold">🔥 Trade Opportunities This Week</CardTitle>
-                <Button variant="outline" size="sm">
+                <CardTitle className="text-lg font-semibold text-slate-100">🔥 Trade Opportunities This Week</CardTitle>
+                <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
                   View All <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>
@@ -141,7 +141,11 @@ export function Dashboard() {
                     variant={selectedFilter === filter ? "default" : "outline"}
                     size="sm"
                     onClick={() => setSelectedFilter(filter)}
-                    className="capitalize"
+                    className={`capitalize ${
+                      selectedFilter === filter 
+                        ? "bg-blue-600 text-white hover:bg-blue-700" 
+                        : "border-slate-600 text-slate-300 hover:bg-slate-700"
+                    }`}
                   >
                     {filter.replace("-", " ")}
                   </Button>
@@ -158,51 +162,51 @@ export function Dashboard() {
 
         {/* Portfolio Performance */}
         <div className="space-y-6">
-          <Card className="card-shadow">
+          <Card className="card-shadow bg-slate-800 border-slate-700">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold">📊 Performance Overview</CardTitle>
+              <CardTitle className="text-lg font-semibold text-slate-100">📊 Performance Overview</CardTitle>
             </CardHeader>
             <CardContent>
               <PortfolioChart />
             </CardContent>
           </Card>
 
-          <Card className="card-shadow">
+          <Card className="card-shadow bg-slate-800 border-slate-700">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold">Active Positions</CardTitle>
+              <CardTitle className="text-lg font-semibold text-slate-100">Active Positions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-slate-700 rounded-lg border border-slate-600">
                   <div>
-                    <p className="font-medium text-slate-900">MSFT Calendar Spread</p>
-                    <p className="text-xs text-slate-500">Expires Jul 26</p>
+                    <p className="font-medium text-slate-100">MSFT Calendar Spread</p>
+                    <p className="text-xs text-slate-400">Expires Jul 26</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-green-600">+$340</p>
-                    <p className="text-xs text-slate-500">12.3% ROI</p>
+                    <p className="text-sm font-medium text-green-400">+$340</p>
+                    <p className="text-xs text-slate-400">12.3% ROI</p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-slate-700 rounded-lg border border-slate-600">
                   <div>
-                    <p className="font-medium text-slate-900">META Calendar Spread</p>
-                    <p className="text-xs text-slate-500">Expires Jul 28</p>
+                    <p className="font-medium text-slate-100">META Calendar Spread</p>
+                    <p className="text-xs text-slate-400">Expires Jul 28</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-red-600">-$120</p>
-                    <p className="text-xs text-slate-500">-4.2% ROI</p>
+                    <p className="text-sm font-medium text-red-400">-$120</p>
+                    <p className="text-xs text-slate-400">-4.2% ROI</p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-slate-700 rounded-lg border border-slate-600">
                   <div>
-                    <p className="font-medium text-slate-900">GOOGL Calendar Spread</p>
-                    <p className="text-xs text-slate-500">Expires Aug 2</p>
+                    <p className="font-medium text-slate-100">GOOGL Calendar Spread</p>
+                    <p className="text-xs text-slate-400">Expires Aug 2</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-slate-600">+$45</p>
-                    <p className="text-xs text-slate-500">1.8% ROI</p>
+                    <p className="text-sm font-medium text-slate-300">+$45</p>
+                    <p className="text-xs text-slate-400">1.8% ROI</p>
                   </div>
                 </div>
               </div>

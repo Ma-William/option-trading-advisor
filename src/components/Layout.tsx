@@ -15,7 +15,7 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <SidebarProvider defaultOpen={!isMobile}>
-      <div className="min-h-screen flex w-full bg-gray-50">
+      <div className="min-h-screen flex w-full bg-slate-900">
         <AppSidebar />
         <div className="flex-1 flex flex-col">
           <TopNavigation />
