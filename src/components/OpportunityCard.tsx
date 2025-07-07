@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, TrendingUp, AlertTriangle, CheckCircle } from "lucide-react";
@@ -17,9 +18,13 @@ interface Opportunity {
   companyName: string;
   eventType: string;
   eventDate: string;
+  eventDescription: string;
   currentPrice: number;
   impliedVolatility: number;
+  expectedMove: string;
   strategy: Strategy | null;
+  recommendation: string;
+  recommendingModels: string[];
 }
 
 interface OpportunityCardProps {
@@ -71,13 +76,28 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
         
         <div>
           <h4 className="text-slate-200 font-medium mb-2">Recommended Strategy</h4>
-          <p className="text-slate-300 text-sm">{opportunity.strategy}</p>
+          <p className="text-slate-300 text-sm">
+            {opportunity.strategy ? opportunity.strategy.description : "No strategy recommended"}
+          </p>
         </div>
+
+        {opportunity.recommendingModels.length > 0 && (
+          <div>
+            <h4 className="text-slate-200 font-medium mb-2">Recommending Models ({opportunity.recommendingModels.length})</h4>
+            <div className="flex flex-wrap gap-1">
+              {opportunity.recommendingModels.map((model) => (
+                <Badge key={model} variant="outline" className="text-xs bg-slate-700 text-slate-300 border-slate-600">
+                  {model}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
         
         <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-700">
           <div>
             <p className="text-slate-400 text-xs">Implied Volatility</p>
-            <p className="text-slate-200 font-medium">{opportunity.impliedVolatility}</p>
+            <p className="text-slate-200 font-medium">{opportunity.impliedVolatility}%</p>
           </div>
           <div>
             <p className="text-slate-400 text-xs">Expected Move</p>

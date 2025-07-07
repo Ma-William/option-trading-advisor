@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -114,7 +113,17 @@ type SortKey = keyof ModelData;
 type SortDirection = 'asc' | 'desc' | null;
 
 export function ModelSelectionPanel() {
-  const [selectedModels, setSelectedModels] = useState<string[]>([]);
+  // Initialize selected models from localStorage
+  const getInitialSelectedModels = () => {
+    try {
+      const saved = localStorage.getItem('selectedModels');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const [selectedModels, setSelectedModels] = useState<string[]>(getInitialSelectedModels);
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
   const { toast } = useToast();
@@ -155,6 +164,8 @@ export function ModelSelectionPanel() {
   });
 
   const handleModelSelection = (modelName: string, checked: boolean) => {
+    let newSelectedModels;
+    
     if (checked) {
       if (selectedModels.length >= 10) {
         toast({
@@ -164,7 +175,7 @@ export function ModelSelectionPanel() {
         });
         return;
       }
-      setSelectedModels([...selectedModels, modelName]);
+      newSelectedModels = [...selectedModels, modelName];
     } else {
       if (selectedModels.length <= 3 && selectedModels.includes(modelName)) {
         toast({
@@ -174,8 +185,12 @@ export function ModelSelectionPanel() {
         });
         return;
       }
-      setSelectedModels(selectedModels.filter(m => m !== modelName));
+      newSelectedModels = selectedModels.filter(m => m !== modelName);
     }
+    
+    setSelectedModels(newSelectedModels);
+    // Save to localStorage immediately
+    localStorage.setItem('selectedModels', JSON.stringify(newSelectedModels));
   };
 
   const getSortIcon = (key: SortKey) => {
@@ -198,6 +213,9 @@ export function ModelSelectionPanel() {
       return;
     }
 
+    // Save to localStorage
+    localStorage.setItem('selectedModels', JSON.stringify(selectedModels));
+    
     toast({
       title: "Configuration saved",
       description: `Successfully configured ${selectedModels.length} models for strategy recommendations.`,
