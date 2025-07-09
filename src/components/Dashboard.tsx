@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Calendar, TrendingUp, DollarSign, Target, ChevronRight } from "lucide-react";
+import { Calendar, TrendingUp, Target, ChevronRight, Percent, Activity, TrendingDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +15,7 @@ const upcomingEarnings = [
     date: "Jul 23",
     time: "After Market",
     ivRank: 85,
-    recommendation: "strong-buy",
+    recommendation: "strongly-recommended",
     expectedMove: "8.2%",
     marketCap: "800B"
   },
@@ -25,7 +25,7 @@ const upcomingEarnings = [
     date: "Jul 25",
     time: "After Market",
     ivRank: 42,
-    recommendation: "hold",
+    recommendation: "considered",
     expectedMove: "4.1%",
     marketCap: "3T"
   },
@@ -35,7 +35,7 @@ const upcomingEarnings = [
     date: "Jul 28",
     time: "After Market",
     ivRank: 78,
-    recommendation: "buy",
+    recommendation: "recommended",
     expectedMove: "9.5%",
     marketCap: "1.2T"
   },
@@ -45,7 +45,7 @@ const upcomingEarnings = [
     date: "Jul 30",
     time: "After Market",
     ivRank: 65,
-    recommendation: "buy",
+    recommendation: "recommended",
     expectedMove: "6.8%",
     marketCap: "1.5T"
   }
@@ -61,24 +61,38 @@ const portfolioStats = [
   },
   {
     title: "Win Rate",
-    value: "68%",
+    value: "52%",
     change: "+5% vs last month",
     icon: TrendingUp,
     color: "text-green-600"
   },
   {
-    title: "Total PnL",
-    value: "$12,847",
-    change: "+$2,340 this month",
-    icon: DollarSign,
+    title: "ROI",
+    value: "12.4%",
+    change: "+3.2% this month",
+    icon: Percent,
     color: "text-green-600"
   },
   {
-    title: "ROI",
-    value: "23.4%",
-    change: "+3.2% this month",
-    icon: Calendar,
+    title: "Volatility",
+    value: "5.8%",
+    change: "+1.1% this month",
+    icon: Activity,
+    color: "text-yellow-600"
+  },
+  {
+    title: "Sharpe Ratio",
+    value: "1.98",
+    change: "+0.12 this month",
+    icon: TrendingUp,
     color: "text-blue-600"
+  },
+  {
+    title: "Max Drawdown",
+    value: "22.56%",
+    change: "+2.3% this month",
+    icon: TrendingDown,
+    color: "text-red-600"
   }
 ];
 
@@ -104,7 +118,7 @@ export function Dashboard() {
       </div>
 
       {/* Portfolio Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         {portfolioStats.map((stat, index) => (
           <Card key={index} className="card-shadow hover:shadow-xl transition-shadow bg-slate-800 border-slate-700">
             <CardContent className="p-6">
@@ -135,7 +149,7 @@ export function Dashboard() {
                 </Button>
               </div>
               <div className="flex space-x-2 mt-4">
-                {["all", "high-iv", "strong-buy"].map((filter) => (
+                {["all", "high-iv", "strongly-recommended"].map((filter) => (
                   <Button
                     key={filter}
                     variant={selectedFilter === filter ? "default" : "outline"}
@@ -183,8 +197,8 @@ export function Dashboard() {
                     <p className="text-xs text-slate-400">Expires Jul 26</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-green-400">+$340</p>
-                    <p className="text-xs text-slate-400">12.3% ROI</p>
+                    <p className="text-sm font-medium text-green-400">+12.3%</p>
+                    <p className="text-xs text-slate-400">ROI</p>
                   </div>
                 </div>
 
@@ -194,8 +208,8 @@ export function Dashboard() {
                     <p className="text-xs text-slate-400">Expires Jul 28</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-red-400">-$120</p>
-                    <p className="text-xs text-slate-400">-4.2% ROI</p>
+                    <p className="text-sm font-medium text-red-400">-4.2%</p>
+                    <p className="text-xs text-slate-400">ROI</p>
                   </div>
                 </div>
 
@@ -205,8 +219,8 @@ export function Dashboard() {
                     <p className="text-xs text-slate-400">Expires Aug 2</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-slate-300">+$45</p>
-                    <p className="text-xs text-slate-400">1.8% ROI</p>
+                    <p className="text-sm font-medium text-slate-300">+1.8%</p>
+                    <p className="text-xs text-slate-400">ROI</p>
                   </div>
                 </div>
               </div>

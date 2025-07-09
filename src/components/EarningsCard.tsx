@@ -20,14 +20,31 @@ interface EarningsCardProps {
 export function EarningsCard({ earning }: EarningsCardProps) {
   const getRecommendationColor = (rec: string) => {
     switch (rec) {
-      case "strong-buy":
+      case "strongly-recommended":
         return "bg-teal-500/20 text-teal-400 border-teal-500/50 font-semibold";
-      case "buy":
+      case "recommended":
         return "bg-blue-500/20 text-blue-400 border-blue-500/50 font-semibold";
-      case "hold":
+      case "considered":
         return "bg-amber-500/20 text-amber-400 border-amber-500/50 font-semibold";
+      case "not-considered":
+        return "bg-slate-500/20 text-slate-400 border-slate-500/50 font-semibold";
       default:
         return "bg-slate-500/20 text-slate-400 border-slate-500/50 font-semibold";
+    }
+  };
+
+  const getRecommendationText = (rec: string) => {
+    switch (rec) {
+      case "strongly-recommended":
+        return "STRONGLY RECOMMENDED";
+      case "recommended":
+        return "RECOMMENDED";
+      case "considered":
+        return "CONSIDERED";
+      case "not-considered":
+        return "NOT CONSIDERED";
+      default:
+        return rec.toUpperCase();
     }
   };
 
@@ -53,7 +70,7 @@ export function EarningsCard({ earning }: EarningsCardProps) {
           variant="outline" 
           className={getRecommendationColor(earning.recommendation)}
         >
-          {earning.recommendation.replace("-", " ").toUpperCase()}
+          {getRecommendationText(earning.recommendation)}
         </Badge>
       </div>
 
