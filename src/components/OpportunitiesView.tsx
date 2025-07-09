@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TickerSelector } from "@/components/TickerSelector";
@@ -81,7 +82,8 @@ export function OpportunitiesView() {
   const getSelectedModels = () => {
     try {
       const saved = localStorage.getItem('selectedModels');
-      return saved ? JSON.parse(saved) : [];
+      const models = saved ? JSON.parse(saved) : [];
+      return Array.isArray(models) ? models : [];
     } catch {
       return [];
     }
@@ -138,7 +140,7 @@ export function OpportunitiesView() {
             <CardHeader>
               <CardTitle className="text-slate-100">
                 Opportunities Next 7 Days
-                {selectedTickers.length > 0 && (
+                {selectedTickers.length > 0 && selectedModels.length > 0 && (
                   <span className="ml-2 text-sm font-normal text-slate-400">
                     ({filteredOpportunities.length} found)
                   </span>
