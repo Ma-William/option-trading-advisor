@@ -1,4 +1,5 @@
 
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import Index from "./pages/Index";
 import Opportunities from "./pages/Opportunities";
+import Alerts from "./pages/Alerts";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -27,6 +29,11 @@ const App = () => (
           <Route path="/opportunities" element={
             <Layout>
               <Opportunities />
+            </Layout>
+          } />
+          <Route path="/alerts" element={
+            <Layout>
+              <Alerts />
             </Layout>
           } />
           <Route path="/settings" element={

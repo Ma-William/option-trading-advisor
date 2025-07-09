@@ -1,9 +1,9 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TickerSelector } from "@/components/TickerSelector";
 import { OpportunityCard } from "@/components/OpportunityCard";
 import { Calendar, TrendingUp, AlertTriangle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock data for opportunities with model recommendations
 const mockOpportunities = [
@@ -77,6 +77,20 @@ const calculateRecommendation = (recommendingModels: string[], selectedModels: s
 
 export function OpportunitiesView() {
   const [selectedTickers, setSelectedTickers] = useState<string[]>([]);
+  const [alerts, setAlerts] = useState<string[]>([]);
+  const { toast } = useToast();
+
+  // Load alerts from localStorage on component mount
+  useEffect(() => {
+    try {
+      const savedAlerts = localStorage.getItem('tradingAlerts');
+      if (savedAlerts) {
+        setAlerts(JSON.parse(savedAlerts));
+      }
+    } catch {
+      setAlerts([]);
+    }
+  }, []);
 
   // Get selected models from localStorage (will be set from ModelSelectionPanel)
   const getSelectedModels = () => {
@@ -99,6 +113,23 @@ export function OpportunitiesView() {
           recommendation: calculateRecommendation(opp.recommendingModels, selectedModels)
         }))
     : [];
+
+  const handleSetAlert = (opportunity: any) => {
+    const newAlerts = alerts.includes(opportunity.ticker)
+      ? alerts.filter(ticker => ticker !== opportunity.ticker)
+      : [...alerts, opportunity.ticker];
+    
+    setAlerts(newAlerts);
+    
+    // Save to localStorage
+    localStorage.setItem('tradingAlerts', JSON.stringify(newAlerts));
+    
+    // Show toast notification
+    toast({
+      title: alerts.includes(opportunity.ticker) ? "Alert Removed" : "Alert Set",
+      description: `${opportunity.ticker} ${alerts.includes(opportunity.ticker) ? 'removed from' : 'added to'} your alerts.`,
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -168,7 +199,9 @@ export function OpportunitiesView() {
                   {filteredOpportunities.map((opportunity) => (
                     <OpportunityCard 
                       key={opportunity.ticker} 
-                      opportunity={opportunity} 
+                      opportunity={opportunity}
+                      onSetAlert={handleSetAlert}
+                      isAlertSet={alerts.includes(opportunity.ticker)}
                     />
                   ))}
                 </div>
