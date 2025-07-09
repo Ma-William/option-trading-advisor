@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TickerSelector } from "@/components/TickerSelector";
 import { OpportunityCard } from "@/components/OpportunityCard";
-import { Calendar, TrendingUp } from "lucide-react";
+import { Calendar, TrendingUp, AlertTriangle } from "lucide-react";
 
 // Mock data for opportunities with model recommendations
 const mockOpportunities = [
