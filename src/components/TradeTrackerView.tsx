@@ -6,96 +6,104 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { TrendingUp, Calendar, DollarSign, Percent, Activity, TrendingDown, Target, Eye } from "lucide-react";
 
-// Mock data for historical alerts/trades
+// Updated mock data with the new structure
 const mockHistoricalTrades = [
   {
     id: 1,
-    ticker: "TSLA",
-    companyName: "Tesla Inc.",
-    eventType: "Earnings",
-    eventDate: "2025-01-15",
-    recommendation: "Strongly Recommended",
-    strategy: "Calendar Spread",
-    roi: 12.3,
-    status: "Closed"
+    ticker: "AKAM",
+    strategy: "Calendar Spread\nEarnings",
+    eventDate: "2025-05-08",
+    entryDate: "2025-05-08",
+    exitDate: "2025-05-09", // Next Trading Date
+    pctReturn: 0.0323,
+    status: "Close",
+    nearExp: "2025-05-09",
+    longExp: "2025-06-06",
+    strike: 85,
+    entryCost: 1.24,
+    exitProceeds: 1.29
   },
   {
     id: 2,
-    ticker: "AAPL",
-    companyName: "Apple Inc.",
-    eventType: "Product Launch",
-    eventDate: "2025-01-18",
-    recommendation: "Recommended",
-    strategy: "Iron Condor",
-    roi: -4.2,
-    status: "Closed"
+    ticker: "HUT",
+    strategy: "Calendar Spread\nEarnings",
+    eventDate: "2025-05-08",
+    entryDate: "2025-05-08",
+    exitDate: "2025-05-09", // Next Trading Date
+    pctReturn: -0.082,
+    status: "Close",
+    nearExp: "2025-05-09",
+    longExp: "2025-06-06",
+    strike: 14,
+    entryCost: 1.22,
+    exitProceeds: 1.13
   },
   {
     id: 3,
-    ticker: "NVDA",
-    companyName: "NVIDIA Corporation",
-    eventType: "Conference Call",
-    eventDate: "2025-01-20",
-    recommendation: "Considered",
-    strategy: "Calendar Spread",
-    roi: 8.7,
-    status: "Closed"
+    ticker: "KVUE",
+    strategy: "Calendar Spread\nEarnings",
+    eventDate: "2025-05-08",
+    entryDate: "2025-05-08",
+    exitDate: "2025-05-09", // Next Trading Date
+    pctReturn: 0.5714,
+    status: "Close",
+    nearExp: "2025-05-09",
+    longExp: "2025-06-06",
+    strike: 24,
+    entryCost: 0.42,
+    exitProceeds: 0.67
   },
   {
     id: 4,
-    ticker: "MSFT",
-    companyName: "Microsoft Corporation",
-    eventType: "Earnings",
-    eventDate: "2025-01-22",
-    recommendation: "Strongly Recommended",
-    strategy: "Calendar Spread",
-    roi: 15.2,
-    status: "Closed"
+    ticker: "MVIS",
+    strategy: "Calendar Spread\nEarnings",
+    eventDate: "2025-05-12",
+    entryDate: "2025-05-12",
+    exitDate: "2025-05-13", // Next Trading Date
+    pctReturn: 3,
+    status: "Close",
+    nearExp: "2025-05-16",
+    longExp: "2025-06-06",
+    strike: 1.5,
+    entryCost: 0.02,
+    exitProceeds: 0.09
   },
   {
     id: 5,
-    ticker: "GOOGL",
-    companyName: "Alphabet Inc.",
-    eventType: "Earnings",
-    eventDate: "2025-01-25",
-    recommendation: "Recommended",
-    strategy: "Calendar Spread",
-    roi: 6.8,
-    status: "Closed"
-  },
-  // Generate more positive entries to reach 47 total
-  ...Array.from({ length: 42 }, (_, i) => ({
-    id: i + 6,
-    ticker: ["META", "AMZN", "NFLX", "AMD", "INTC", "CRM", "UBER", "LYFT", "SPOT", "SQ"][i % 10],
-    companyName: ["Meta Platforms", "Amazon", "Netflix", "AMD", "Intel", "Salesforce", "Uber", "Lyft", "Spotify", "Block"][i % 10],
-    eventType: ["Earnings", "Product Launch", "Conference Call"][i % 3],
-    eventDate: `2025-0${((i % 3) + 2)}-${String((i % 28) + 1).padStart(2, '0')}`,
-    recommendation: ["Strongly Recommended", "Recommended", "Considered"][i % 3],
-    strategy: ["Calendar Spread", "Iron Condor", "Butterfly Spread"][i % 3],
-    roi: Math.round((Math.random() * 25 + 2) * 10) / 10, // Mostly positive ROI
-    status: "Closed"
-  }))
+    ticker: "PLUG",
+    strategy: "Calendar Spread\nEarnings",
+    eventDate: "2025-05-12",
+    entryDate: "2025-05-12",
+    exitDate: "2025-05-13", // Next Trading Date
+    pctReturn: 0.75,
+    status: "Close",
+    nearExp: "2025-05-16",
+    longExp: "2025-06-06",
+    strike: 1,
+    entryCost: 0.04,
+    exitProceeds: 0.08
+  }
 ];
 
 const portfolioStats = [
   {
     title: "Total Trades",
-    value: "47",
-    change: "+12 this month",
+    value: "5",
+    change: "+5 this month",
     icon: Target,
     color: "text-blue-600"
   },
   {
     title: "Win Rate",
-    value: "52%",
-    change: "+5% vs last month",
+    value: "80%",
+    change: "+20% vs last month",
     icon: TrendingUp,
     color: "text-green-600"
   },
   {
-    title: "ROI",
-    value: "12.4%",
-    change: "+3.2% this month",
+    title: "Average ROI",
+    value: "84.1%",
+    change: "+15.2% this month",
     icon: Percent,
     color: "text-green-600"
   },
@@ -115,8 +123,8 @@ const portfolioStats = [
   },
   {
     title: "Max Drawdown",
-    value: "22.56%",
-    change: "+2.3% this month",
+    value: "8.2%",
+    change: "-14.36% this month",
     icon: TrendingDown,
     color: "text-red-600"
   }
@@ -124,23 +132,13 @@ const portfolioStats = [
 
 const StrategyModal = ({ trade }: { trade: any }) => {
   return (
-    <DialogContent className="max-w-2xl bg-slate-800 border-slate-700">
+    <DialogContent className="max-w-3xl bg-slate-800 border-slate-700">
       <DialogHeader>
-        <DialogTitle className="text-slate-100">Strategy Overview - {trade.ticker}</DialogTitle>
+        <DialogTitle className="text-slate-100">Trade Setup - {trade.ticker}</DialogTitle>
       </DialogHeader>
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-semibold text-slate-100 mb-2">Objective</h3>
-          <p className="text-slate-300">Profit from implied volatility crush after earnings while maintaining upside potential.</p>
-        </div>
-        
-        <div>
-          <h3 className="text-lg font-semibold text-slate-100 mb-2">Type</h3>
-          <p className="text-slate-300">Calendar Spread (Call)</p>
-        </div>
-        
-        <div>
-          <h3 className="text-lg font-semibold text-slate-100 mb-4">Trade Setup</h3>
+          <h3 className="text-lg font-semibold text-slate-100 mb-2">Entry Date: {formatDate(trade.entryDate)}</h3>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
@@ -157,64 +155,74 @@ const StrategyModal = ({ trade }: { trade: any }) => {
                   <td className="py-2 px-3 text-slate-300">1</td>
                   <td className="py-2 px-3 text-red-400 font-medium">Sell</td>
                   <td className="py-2 px-3 text-slate-300">Call (ATM)</td>
-                  <td className="py-2 px-3 text-slate-300">ATM</td>
-                  <td className="py-2 px-3 text-slate-300">Nearest (Earnings Week)</td>
+                  <td className="py-2 px-3 text-slate-300">{trade.strike}</td>
+                  <td className="py-2 px-3 text-slate-300">{formatDate(trade.nearExp)}</td>
                 </tr>
                 <tr>
                   <td className="py-2 px-3 text-slate-300">2</td>
                   <td className="py-2 px-3 text-green-400 font-medium">Buy</td>
                   <td className="py-2 px-3 text-slate-300">Call (ATM)</td>
-                  <td className="py-2 px-3 text-slate-300">ATM</td>
-                  <td className="py-2 px-3 text-slate-300">+30 Days</td>
+                  <td className="py-2 px-3 text-slate-300">{trade.strike}</td>
+                  <td className="py-2 px-3 text-slate-300">{formatDate(trade.longExp)}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
         
-        <div className="bg-slate-900 p-4 rounded-lg">
-          <h4 className="text-slate-200 font-medium mb-2">Key Points</h4>
-          <ul className="list-disc list-inside space-y-1 text-sm text-slate-300">
-            <li>Sell an at-the-money call option with the nearest expiration date (coinciding with the earnings announcement).</li>
-            <li>Buy an at-the-money call option with an expiration around 30 days later.</li>
-          </ul>
+        <div>
+          <h3 className="text-lg font-semibold text-slate-100 mb-2">Exit Date: {formatDate(trade.exitDate)}</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-slate-600">
+                  <th className="text-left py-2 px-3 text-slate-200 font-medium">Leg</th>
+                  <th className="text-left py-2 px-3 text-slate-200 font-medium">Action</th>
+                  <th className="text-left py-2 px-3 text-slate-200 font-medium">Option Type</th>
+                  <th className="text-left py-2 px-3 text-slate-200 font-medium">Strike</th>
+                  <th className="text-left py-2 px-3 text-slate-200 font-medium">Expiration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-slate-700">
+                  <td className="py-2 px-3 text-slate-300">1</td>
+                  <td className="py-2 px-3 text-green-400 font-medium">Buy</td>
+                  <td className="py-2 px-3 text-slate-300">Call (ATM)</td>
+                  <td className="py-2 px-3 text-slate-300">{trade.strike}</td>
+                  <td className="py-2 px-3 text-slate-300">{formatDate(trade.nearExp)}</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-3 text-slate-300">2</td>
+                  <td className="py-2 px-3 text-red-400 font-medium">Sell</td>
+                  <td className="py-2 px-3 text-slate-300">Call (ATM)</td>
+                  <td className="py-2 px-3 text-slate-300">{trade.strike}</td>
+                  <td className="py-2 px-3 text-slate-300">{formatDate(trade.longExp)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </DialogContent>
   );
 };
 
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+};
+
+const getRoiColor = (roi: number) => {
+  if (roi > 0) return "text-green-400";
+  if (roi < 0) return "text-red-400";
+  return "text-slate-400";
+};
+
 export function TradeTrackerView() {
   const [selectedTrade, setSelectedTrade] = useState<any>(null);
-
-  const getRecommendationBadge = (recommendation: string) => {
-    switch (recommendation) {
-      case "Strongly Recommended":
-        return "bg-green-600/20 text-green-400 border-green-600/30";
-      case "Recommended":
-        return "bg-blue-600/20 text-blue-400 border-blue-600/30";
-      case "Considered":
-        return "bg-yellow-600/20 text-yellow-400 border-yellow-600/30";
-      case "Not Considered":
-        return "bg-slate-600/20 text-slate-400 border-slate-600/30";
-      default:
-        return "bg-slate-600/20 text-slate-400 border-slate-600/30";
-    }
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
-  };
-
-  const getRoiColor = (roi: number) => {
-    if (roi > 0) return "text-green-400";
-    if (roi < 0) return "text-red-400";
-    return "text-slate-400";
-  };
 
   return (
     <div className="space-y-6">
@@ -260,10 +268,9 @@ export function TradeTrackerView() {
               <thead>
                 <tr className="border-b border-slate-700">
                   <th className="text-left py-3 px-4 text-slate-200 font-medium">Ticker</th>
-                  <th className="text-left py-3 px-4 text-slate-200 font-medium">Event Type</th>
-                  <th className="text-left py-3 px-4 text-slate-200 font-medium">Event Date</th>
-                  <th className="text-left py-3 px-4 text-slate-200 font-medium">Recommendation</th>
                   <th className="text-left py-3 px-4 text-slate-200 font-medium">Strategy</th>
+                  <th className="text-left py-3 px-4 text-slate-200 font-medium">Event Date</th>
+                  <th className="text-left py-3 px-4 text-slate-200 font-medium">Entry/Exit</th>
                   <th className="text-left py-3 px-4 text-slate-200 font-medium">ROI</th>
                   <th className="text-left py-3 px-4 text-slate-200 font-medium">Status</th>
                   <th className="text-left py-3 px-4 text-slate-200 font-medium">Action</th>
@@ -273,22 +280,24 @@ export function TradeTrackerView() {
                 {mockHistoricalTrades.map((trade) => (
                   <tr key={trade.id} className="border-b border-slate-700 hover:bg-slate-700/30">
                     <td className="py-3 px-4">
-                      <div>
-                        <p className="font-medium text-slate-100">{trade.ticker}</p>
-                        <p className="text-sm text-slate-400">{trade.companyName}</p>
+                      <div className="font-medium text-slate-100">{trade.ticker}</div>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="text-slate-300">
+                        <div>Calendar Spread</div>
+                        <div className="text-xs text-slate-500">Earnings</div>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-slate-300">{trade.eventType}</td>
                     <td className="py-3 px-4 text-slate-300">{formatDate(trade.eventDate)}</td>
                     <td className="py-3 px-4">
-                      <Badge className={`${getRecommendationBadge(trade.recommendation)} border text-xs`}>
-                        {trade.recommendation}
-                      </Badge>
+                      <div className="text-slate-300">
+                        <div className="text-sm">Entry: {formatDate(trade.entryDate)}</div>
+                        <div className="text-xs text-slate-500">Exit: {formatDate(trade.exitDate)}</div>
+                      </div>
                     </td>
-                    <td className="py-3 px-4 text-slate-300">{trade.strategy}</td>
                     <td className="py-3 px-4">
-                      <span className={`font-medium ${getRoiColor(trade.roi)}`}>
-                        {trade.roi > 0 ? '+' : ''}{trade.roi}%
+                      <span className={`font-medium ${getRoiColor(trade.pctReturn)}`}>
+                        {trade.pctReturn > 0 ? '+' : ''}{(trade.pctReturn * 100).toFixed(1)}%
                       </span>
                     </td>
                     <td className="py-3 px-4">
