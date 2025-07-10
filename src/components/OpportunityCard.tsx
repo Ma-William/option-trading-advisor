@@ -21,7 +21,6 @@ interface Opportunity {
   eventDescription: string;
   currentPrice: number;
   impliedVolatility: number;
-  expectedMove: string;
   strategy: Strategy | null;
   recommendation: string;
   recommendingModels: string[];
@@ -113,14 +112,10 @@ export function OpportunityCard({ opportunity, onSetAlert, isAlertSet = false }:
           </div>
         )}
         
-        <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-700">
+        <div className="grid grid-cols-1 gap-4 pt-2 border-t border-slate-700">
           <div>
             <p className="text-slate-400 text-xs">Implied Volatility</p>
             <p className="text-slate-200 font-medium">{opportunity.impliedVolatility}%</p>
-          </div>
-          <div>
-            <p className="text-slate-400 text-xs">Expected Move</p>
-            <p className="text-slate-200 font-medium">{opportunity.expectedMove}</p>
           </div>
         </div>
       </CardContent>

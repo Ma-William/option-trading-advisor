@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Calendar, TrendingUp, Target, ChevronRight, Percent, Activity, TrendingDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,7 +12,7 @@ const upcomingEarnings = [
     company: "Tesla Inc.",
     date: "Jul 23",
     time: "After Market",
-    recommendation: "strongly-recommended",
+    recommendation: "Strongly Recommended",
     marketCap: "800B"
   },
   {
@@ -21,7 +20,7 @@ const upcomingEarnings = [
     company: "Apple Inc.",
     date: "Jul 25",
     time: "After Market",
-    recommendation: "considered",
+    recommendation: "Considered",
     marketCap: "3T"
   },
   {
@@ -29,7 +28,7 @@ const upcomingEarnings = [
     company: "NVIDIA Corp.",
     date: "Jul 28",
     time: "After Market",
-    recommendation: "recommended",
+    recommendation: "Recommended",
     marketCap: "1.2T"
   },
   {
@@ -37,7 +36,7 @@ const upcomingEarnings = [
     company: "Amazon.com Inc.",
     date: "Jul 30",
     time: "After Market",
-    recommendation: "recommended",
+    recommendation: "Recommended",
     marketCap: "1.5T"
   }
 ];
@@ -90,6 +89,25 @@ const portfolioStats = [
 export function Dashboard() {
   const [selectedFilter, setSelectedFilter] = useState("all");
 
+  const getFilteredEarnings = () => {
+    switch (selectedFilter) {
+      case "strongly-recommended":
+        return upcomingEarnings.filter(earning => earning.recommendation === "Strongly Recommended");
+      case "recommended+":
+        return upcomingEarnings.filter(earning => 
+          earning.recommendation === "Strongly Recommended" || earning.recommendation === "Recommended"
+        );
+      case "considered+":
+        return upcomingEarnings.filter(earning => 
+          earning.recommendation === "Strongly Recommended" || 
+          earning.recommendation === "Recommended" || 
+          earning.recommendation === "Considered"
+        );
+      default:
+        return upcomingEarnings;
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -139,8 +157,8 @@ export function Dashboard() {
                   View All <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>
-              <div className="flex space-x-2 mt-4">
-                {["all", "strongly-recommended"].map((filter) => (
+              <div className="flex flex-wrap gap-2 mt-4">
+                {["all", "strongly-recommended", "recommended+", "considered+"].map((filter) => (
                   <Button
                     key={filter}
                     variant={selectedFilter === filter ? "default" : "outline"}
@@ -152,13 +170,16 @@ export function Dashboard() {
                         : "border-slate-600 text-slate-300 hover:bg-slate-700"
                     }`}
                   >
-                    {filter.replace("-", " ")}
+                    {filter === "all" ? "All" : 
+                     filter === "strongly-recommended" ? "Strongly Recommended" :
+                     filter === "recommended+" ? "Recommended+" :
+                     "Considered+"}
                   </Button>
                 ))}
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              {upcomingEarnings.map((earning) => (
+              {getFilteredEarnings().map((earning) => (
                 <EarningsCard key={earning.ticker} earning={earning} />
               ))}
             </CardContent>
