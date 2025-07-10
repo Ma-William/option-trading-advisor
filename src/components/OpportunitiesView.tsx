@@ -11,11 +11,10 @@ const mockOpportunities = [
     ticker: "TSLA",
     companyName: "Tesla Inc.",
     eventType: "Earnings",
-    eventDate: "2025-07-10",
-    eventDescription: "Q2 2025 earnings report expected to show delivery numbers and guidance updates",
+    eventDate: "2025-07-23",
+    eventDescription: "Q2 2025 earnings announcement. Expected to report on vehicle deliveries, energy storage deployments, and FSD progress.",
     currentPrice: 248.50,
     impliedVolatility: 85,
-    expectedMove: "8.2%",
     recommendingModels: ["AdaBoost", "Decision Tree", "Hist Gradient Boosting", "K Means", "Linear Regression", "Logistic Regression"],
     recommendation: "Strongly Recommended", // 6/10 = 60%
     strategy: {
@@ -30,12 +29,11 @@ const mockOpportunities = [
   {
     ticker: "AAPL",
     companyName: "Apple Inc.",
-    eventType: "Product Launch",
-    eventDate: "2025-07-12",
-    eventDescription: "iPhone 16 Pro launch event with new AI features announcement",
+    eventType: "Earnings",
+    eventDate: "2025-07-25",
+    eventDescription: "Q2 2025 earnings announcement. Focus on iPhone sales, Services revenue growth, and AI integration progress.",
     currentPrice: 192.80,
     impliedVolatility: 42,
-    expectedMove: "4.1%",
     recommendingModels: ["K Means", "Linear Regression", "Logistic Regression", "Neural Network", "Random Forest", "SVR", "XGBoost"],
     recommendation: "Strongly Recommended", // 7/10 = 70%
     strategy: {
@@ -50,15 +48,33 @@ const mockOpportunities = [
   {
     ticker: "NVDA",
     companyName: "NVIDIA Corporation",
-    eventType: "Conference Call",
-    eventDate: "2025-07-14",
-    eventDescription: "AI chip demand and data center growth discussion",
+    eventType: "Earnings",
+    eventDate: "2025-07-28",
+    eventDescription: "Q2 2025 earnings announcement. Expected discussion on AI chip demand, data center growth, and gaming segment performance.",
     currentPrice: 875.30,
     impliedVolatility: 78,
-    expectedMove: "9.5%",
     recommendingModels: ["K Means", "Linear Regression"],
     recommendation: "Considered", // 2/10 = 20%
     strategy: null // No recommended strategy due to low model consensus
+  },
+  {
+    ticker: "AMZN",
+    companyName: "Amazon.com Inc.",
+    eventType: "Earnings",
+    eventDate: "2025-07-30",
+    eventDescription: "Q2 2025 earnings announcement. Focus on AWS growth, retail margins, and advertising revenue expansion.",
+    currentPrice: 145.80,
+    impliedVolatility: 55,
+    recommendingModels: ["AdaBoost", "Random Forest", "XGBoost"],
+    recommendation: "Considered", // 3/10 = 30%
+    strategy: {
+      name: "Calendar Spread",
+      description: "Sell 7-day ATM call, Buy 30-day ATM call",
+      netDebit: 3.20,
+      maxLoss: 3.20,
+      maxProfit: 15.80,
+      winRate: 65
+    }
   }
 ];
 

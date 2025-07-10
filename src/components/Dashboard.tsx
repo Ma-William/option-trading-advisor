@@ -4,7 +4,6 @@ import { Calendar, TrendingUp, Target, ChevronRight, Percent, Activity, Trending
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { EarningsCard } from "@/components/EarningsCard";
 import { PortfolioChart } from "@/components/PortfolioChart";
 
@@ -14,9 +13,7 @@ const upcomingEarnings = [
     company: "Tesla Inc.",
     date: "Jul 23",
     time: "After Market",
-    ivRank: 85,
     recommendation: "strongly-recommended",
-    expectedMove: "8.2%",
     marketCap: "800B"
   },
   {
@@ -24,9 +21,7 @@ const upcomingEarnings = [
     company: "Apple Inc.",
     date: "Jul 25",
     time: "After Market",
-    ivRank: 42,
     recommendation: "considered",
-    expectedMove: "4.1%",
     marketCap: "3T"
   },
   {
@@ -34,9 +29,7 @@ const upcomingEarnings = [
     company: "NVIDIA Corp.",
     date: "Jul 28",
     time: "After Market",
-    ivRank: 78,
     recommendation: "recommended",
-    expectedMove: "9.5%",
     marketCap: "1.2T"
   },
   {
@@ -44,9 +37,7 @@ const upcomingEarnings = [
     company: "Amazon.com Inc.",
     date: "Jul 30",
     time: "After Market",
-    ivRank: 65,
     recommendation: "recommended",
-    expectedMove: "6.8%",
     marketCap: "1.5T"
   }
 ];
@@ -149,7 +140,7 @@ export function Dashboard() {
                 </Button>
               </div>
               <div className="flex space-x-2 mt-4">
-                {["all", "high-iv", "strongly-recommended"].map((filter) => (
+                {["all", "strongly-recommended"].map((filter) => (
                   <Button
                     key={filter}
                     variant={selectedFilter === filter ? "default" : "outline"}

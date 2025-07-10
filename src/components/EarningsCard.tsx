@@ -1,8 +1,7 @@
 
-import { Calendar, TrendingUp, ChevronRight } from "lucide-react";
+import { Calendar, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 
 interface EarningsCardProps {
   earning: {
@@ -10,9 +9,7 @@ interface EarningsCardProps {
     company: string;
     date: string;
     time: string;
-    ivRank: number;
     recommendation: string;
-    expectedMove: string;
     marketCap: string;
   };
 }
@@ -48,12 +45,6 @@ export function EarningsCard({ earning }: EarningsCardProps) {
     }
   };
 
-  const getIVColor = (iv: number) => {
-    if (iv >= 80) return "text-teal-400 font-semibold";
-    if (iv >= 60) return "text-blue-400 font-semibold";
-    return "text-slate-400 font-semibold";
-  };
-
   return (
     <div className="border border-slate-700 rounded-lg p-4 card-hover bg-slate-800 shadow-lg">
       <div className="flex items-center justify-between mb-3">
@@ -74,7 +65,7 @@ export function EarningsCard({ earning }: EarningsCardProps) {
         </Badge>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="mb-4">
         <div className="flex items-center space-x-2">
           <Calendar className="w-4 h-4 text-slate-500" />
           <div>
@@ -82,23 +73,6 @@ export function EarningsCard({ earning }: EarningsCardProps) {
             <p className="text-xs text-slate-400">{earning.time}</p>
           </div>
         </div>
-        <div>
-          <p className="text-sm text-slate-400 font-medium">Expected Move</p>
-          <p className="text-sm font-bold text-slate-100">{earning.expectedMove}</p>
-        </div>
-      </div>
-
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-slate-400 font-medium">IV Rank</span>
-          <span className={`text-sm ${getIVColor(earning.ivRank)}`}>
-            {earning.ivRank}%
-          </span>
-        </div>
-        <Progress 
-          value={earning.ivRank} 
-          className="h-2 bg-slate-700"
-        />
       </div>
 
       <div className="flex items-center justify-between">
