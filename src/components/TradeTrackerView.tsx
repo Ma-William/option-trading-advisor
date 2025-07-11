@@ -762,51 +762,57 @@ const mockHistoricalTrades = [
 const portfolioStats = [
   {
     title: "Total Trades",
-    value: "5",
-    change: "+5 this month",
+    value: "50",
+    change: "+50 this month",
     icon: Target,
     color: "text-blue-600"
   },
   {
     title: "Win Rate",
-    value: "80%",
-    change: "+20% vs last month",
+    value: "78%",
+    change: "+8% vs last month",
     icon: TrendingUp,
     color: "text-green-600"
   },
   {
     title: "Average ROI",
-    value: "84.1%",
-    change: "+15.2% this month",
+    value: "42.3%",
+    change: "+12.1% this month",
     icon: Percent,
     color: "text-green-600"
   },
   {
     title: "Volatility",
-    value: "5.8%",
-    change: "+1.1% this month",
+    value: "6.2%",
+    change: "+0.8% this month",
     icon: Activity,
     color: "text-yellow-600"
   },
   {
     title: "Sharpe Ratio",
-    value: "1.98",
-    change: "+0.12 this month",
+    value: "2.14",
+    change: "+0.16 this month",
     icon: TrendingUp,
     color: "text-blue-600"
   },
   {
     title: "Max Drawdown",
-    value: "8.2%",
-    change: "-14.36% this month",
+    value: "7.1%",
+    change: "-12.2% this month",
     icon: TrendingDown,
     color: "text-red-600"
   }
 ];
 
 const StrategyModal = ({ trade }: { trade: any }) => {
+  const getRoiColor = (roi: number) => {
+    if (roi > 0) return "text-green-400";
+    if (roi < 0) return "text-red-400";
+    return "text-slate-400";
+  };
+
   return (
-    <DialogContent className="max-w-3xl bg-slate-800 border-slate-700">
+    <DialogContent className="max-w-4xl bg-slate-800 border-slate-700">
       <DialogHeader>
         <DialogTitle className="text-slate-100">Trade Setup - {trade.ticker}</DialogTitle>
       </DialogHeader>
@@ -874,6 +880,26 @@ const StrategyModal = ({ trade }: { trade: any }) => {
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-slate-100 mb-4">Summary</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-slate-700 p-4 rounded-lg">
+              <div className="text-sm text-slate-400 mb-1">Entry Cost</div>
+              <div className="text-lg font-semibold text-slate-100">${trade.entryCost}</div>
+            </div>
+            <div className="bg-slate-700 p-4 rounded-lg">
+              <div className="text-sm text-slate-400 mb-1">Exit Proceeds</div>
+              <div className="text-lg font-semibold text-slate-100">${trade.exitProceeds}</div>
+            </div>
+            <div className="bg-slate-700 p-4 rounded-lg">
+              <div className="text-sm text-slate-400 mb-1">ROI</div>
+              <div className={`text-lg font-semibold ${getRoiColor(trade.pctReturn)}`}>
+                {trade.pctReturn > 0 ? '+' : ''}{(trade.pctReturn * 100).toFixed(1)}%
+              </div>
+            </div>
           </div>
         </div>
       </div>
