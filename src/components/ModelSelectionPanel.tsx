@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -224,138 +225,136 @@ export function ModelSelectionPanel() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 p-6">
-      <div className="max-w-7xl mx-auto">
-        <Card className="bg-slate-800 border-slate-700">
-          <CardHeader>
-            <CardTitle className="text-slate-100 text-2xl">Model Selection Panel</CardTitle>
-            <CardDescription className="text-slate-300">
-              Configure AI models for option strategy recommendations. Select 3-10 models to use in the majority voting system.
-            </CardDescription>
-            <div className="flex items-center justify-between pt-4">
-              <div className="text-sm text-slate-400">
-                Selected: {selectedModels.length}/10 models (minimum 3 required)
-              </div>
-              <Button 
-                onClick={saveConfiguration}
-                disabled={selectedModels.length < 3}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                Save Configuration
-              </Button>
+    <div className="w-full h-full">
+      <Card className="bg-slate-800 border-slate-700 w-full">
+        <CardHeader>
+          <CardTitle className="text-slate-100 text-2xl">Model Selection Panel</CardTitle>
+          <CardDescription className="text-slate-300">
+            Configure AI models for option strategy recommendations. Select 3-10 models to use in the majority voting system.
+          </CardDescription>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4">
+            <div className="text-sm text-slate-400">
+              Selected: {selectedModels.length}/10 models (minimum 3 required)
             </div>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-slate-700 hover:bg-slate-700/50">
-                    <TableHead className="text-slate-300">Select</TableHead>
-                    <TableHead className="text-slate-300">
-                      <Button
-                        variant="ghost"
-                        onClick={() => handleSort('name')}
-                        className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
-                      >
-                        Model {getSortIcon('name')}
-                      </Button>
-                    </TableHead>
-                    <TableHead className="text-slate-300">
-                      <Button
-                        variant="ghost"
-                        onClick={() => handleSort('finalPortfolioGain')}
-                        className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
-                      >
-                        Final Portfolio Gain {getSortIcon('finalPortfolioGain')}
-                      </Button>
-                    </TableHead>
-                    <TableHead className="text-slate-300">
-                      <Button
-                        variant="ghost"
-                        onClick={() => handleSort('annualizedReturn')}
-                        className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
-                      >
-                        Annualized Return {getSortIcon('annualizedReturn')}
-                      </Button>
-                    </TableHead>
-                    <TableHead className="text-slate-300">
-                      <Button
-                        variant="ghost"
-                        onClick={() => handleSort('annualizedVolatility')}
-                        className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
-                      >
-                        Annualized Volatility {getSortIcon('annualizedVolatility')}
-                      </Button>
-                    </TableHead>
-                    <TableHead className="text-slate-300">
-                      <Button
-                        variant="ghost"
-                        onClick={() => handleSort('sharpeRatio')}
-                        className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
-                      >
-                        Sharpe Ratio {getSortIcon('sharpeRatio')}
-                      </Button>
-                    </TableHead>
-                    <TableHead className="text-slate-300">
-                      <Button
-                        variant="ghost"
-                        onClick={() => handleSort('maxDrop')}
-                        className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
-                      >
-                        Max Drop {getSortIcon('maxDrop')}
-                      </Button>
-                    </TableHead>
-                    <TableHead className="text-slate-300">
-                      <Button
-                        variant="ghost"
-                        onClick={() => handleSort('winRate')}
-                        className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
-                      >
-                        Win Rate {getSortIcon('winRate')}
-                      </Button>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {sortedData.map((model) => (
-                    <TableRow 
-                      key={model.name} 
-                      className="border-slate-700 hover:bg-slate-700/30"
+            <Button 
+              onClick={saveConfiguration}
+              disabled={selectedModels.length < 3}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Save Configuration
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0 sm:p-6">
+          <div className="overflow-auto max-h-[calc(100vh-300px)]">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-slate-700 hover:bg-slate-700/50">
+                  <TableHead className="text-slate-300 sticky left-0 bg-slate-800 z-10 min-w-[60px]">Select</TableHead>
+                  <TableHead className="text-slate-300 min-w-[150px]">
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleSort('name')}
+                      className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
                     >
-                      <TableCell>
-                        <Checkbox
-                          checked={selectedModels.includes(model.name)}
-                          onCheckedChange={(checked) => 
-                            handleModelSelection(model.name, checked as boolean)
-                          }
-                          className="border-slate-400 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
-                        />
-                      </TableCell>
-                      <TableCell className="text-slate-200 font-medium">{model.name}</TableCell>
-                      <TableCell className="text-slate-300">{formatPercentage(model.finalPortfolioGain)}</TableCell>
-                      <TableCell className="text-slate-300">{formatPercentage(model.annualizedReturn)}</TableCell>
-                      <TableCell className="text-slate-300">{formatPercentage(model.annualizedVolatility)}</TableCell>
-                      <TableCell className="text-slate-300">{formatDecimal(model.sharpeRatio)}</TableCell>
-                      <TableCell className="text-slate-300">{formatPercentage(model.maxDrop)}</TableCell>
-                      <TableCell className="text-slate-300">{formatPercentage(model.winRate)}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                      Model {getSortIcon('name')}
+                    </Button>
+                  </TableHead>
+                  <TableHead className="text-slate-300 min-w-[140px]">
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleSort('finalPortfolioGain')}
+                      className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
+                    >
+                      Final Portfolio Gain {getSortIcon('finalPortfolioGain')}
+                    </Button>
+                  </TableHead>
+                  <TableHead className="text-slate-300 min-w-[140px]">
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleSort('annualizedReturn')}
+                      className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
+                    >
+                      Annualized Return {getSortIcon('annualizedReturn')}
+                    </Button>
+                  </TableHead>
+                  <TableHead className="text-slate-300 min-w-[140px]">
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleSort('annualizedVolatility')}
+                      className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
+                    >
+                      Annualized Volatility {getSortIcon('annualizedVolatility')}
+                    </Button>
+                  </TableHead>
+                  <TableHead className="text-slate-300 min-w-[120px]">
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleSort('sharpeRatio')}
+                      className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
+                    >
+                      Sharpe Ratio {getSortIcon('sharpeRatio')}
+                    </Button>
+                  </TableHead>
+                  <TableHead className="text-slate-300 min-w-[100px]">
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleSort('maxDrop')}
+                      className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
+                    >
+                      Max Drop {getSortIcon('maxDrop')}
+                    </Button>
+                  </TableHead>
+                  <TableHead className="text-slate-300 min-w-[100px]">
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleSort('winRate')}
+                      className="text-slate-300 hover:text-slate-100 p-0 h-auto font-medium"
+                    >
+                      Win Rate {getSortIcon('winRate')}
+                    </Button>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {sortedData.map((model) => (
+                  <TableRow 
+                    key={model.name} 
+                    className="border-slate-700 hover:bg-slate-700/30"
+                  >
+                    <TableCell className="sticky left-0 bg-slate-800 z-10">
+                      <Checkbox
+                        checked={selectedModels.includes(model.name)}
+                        onCheckedChange={(checked) => 
+                          handleModelSelection(model.name, checked as boolean)
+                        }
+                        className="border-slate-400 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                      />
+                    </TableCell>
+                    <TableCell className="text-slate-200 font-medium">{model.name}</TableCell>
+                    <TableCell className="text-slate-300">{formatPercentage(model.finalPortfolioGain)}</TableCell>
+                    <TableCell className="text-slate-300">{formatPercentage(model.annualizedReturn)}</TableCell>
+                    <TableCell className="text-slate-300">{formatPercentage(model.annualizedVolatility)}</TableCell>
+                    <TableCell className="text-slate-300">{formatDecimal(model.sharpeRatio)}</TableCell>
+                    <TableCell className="text-slate-300">{formatPercentage(model.maxDrop)}</TableCell>
+                    <TableCell className="text-slate-300">{formatPercentage(model.winRate)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
 
-            <div className="mt-6 p-4 bg-slate-700/50 rounded-lg border border-slate-600">
-              <h3 className="text-slate-200 font-semibold mb-2">Recommendation System</h3>
-              <div className="text-sm text-slate-300 space-y-1">
-                <div><span className="text-green-400 font-medium">Strongly Recommended:</span> ≥60% of selected models agree</div>
-                <div><span className="text-blue-400 font-medium">Recommended:</span> 50-59% of selected models agree</div>
-                <div><span className="text-yellow-400 font-medium">Considered:</span> 40-49% of selected models agree</div>
-                <div><span className="text-slate-400 font-medium">Not Considered:</span> &lt;40% of selected models agree</div>
-              </div>
+          <div className="mt-6 p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+            <h3 className="text-slate-200 font-semibold mb-2">Recommendation System</h3>
+            <div className="text-sm text-slate-300 space-y-1">
+              <div><span className="text-green-400 font-medium">Strongly Recommended:</span> ≥60% of selected models agree</div>
+              <div><span className="text-blue-400 font-medium">Recommended:</span> 50-59% of selected models agree</div>
+              <div><span className="text-yellow-400 font-medium">Considered:</span> 40-49% of selected models agree</div>
+              <div><span className="text-slate-400 font-medium">Not Considered:</span> &lt;40% of selected models agree</div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
