@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Calendar, TrendingUp, Target, ChevronRight, Percent, Activity, TrendingDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EarningsCard } from "@/components/EarningsCard";
 import { PortfolioChart } from "@/components/PortfolioChart";
+import { Link } from "react-router-dom";
 
 const upcomingEarnings = [
   {
@@ -153,9 +153,11 @@ export function Dashboard() {
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg font-semibold text-slate-100">🔥 Trade Opportunities This Week</CardTitle>
-                <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
-                  View All <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
+                <Link to="/opportunities">
+                  <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
+                    View All <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </Link>
               </div>
               <div className="flex flex-wrap gap-2 mt-4">
                 {["all", "strongly-recommended", "recommended+", "considered+"].map((filter) => (
