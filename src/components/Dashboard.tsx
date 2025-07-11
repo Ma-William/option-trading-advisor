@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Calendar, TrendingUp, Target, ChevronRight, Percent, Activity, TrendingDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -189,7 +190,7 @@ export function Dashboard() {
         <div className="space-y-6">
           <Card className="card-shadow bg-slate-800 border-slate-700">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold text-slate-100">📊 Performance Overview</CardTitle>
+              <CardTitle className="text-lg font-semibold text-slate-100">📊 Model Backtest Performance Summary</CardTitle>
             </CardHeader>
             <CardContent>
               <PortfolioChart />
@@ -205,7 +206,7 @@ export function Dashboard() {
                 <div className="flex items-center justify-between p-3 bg-slate-700 rounded-lg border border-slate-600">
                   <div>
                     <p className="font-medium text-slate-100">MSFT Calendar Spread</p>
-                    <p className="text-xs text-slate-400">Expires Jul 26</p>
+                    <p className="text-xs text-slate-400">Expires Jul 15</p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium text-green-400">+12.3%</p>
@@ -216,7 +217,7 @@ export function Dashboard() {
                 <div className="flex items-center justify-between p-3 bg-slate-700 rounded-lg border border-slate-600">
                   <div>
                     <p className="font-medium text-slate-100">META Calendar Spread</p>
-                    <p className="text-xs text-slate-400">Expires Jul 28</p>
+                    <p className="text-xs text-slate-400">Expires Jul 15</p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium text-red-400">-4.2%</p>
@@ -227,7 +228,7 @@ export function Dashboard() {
                 <div className="flex items-center justify-between p-3 bg-slate-700 rounded-lg border border-slate-600">
                   <div>
                     <p className="font-medium text-slate-100">GOOGL Calendar Spread</p>
-                    <p className="text-xs text-slate-400">Expires Aug 2</p>
+                    <p className="text-xs text-slate-400">Expires Jul 15</p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium text-slate-300">+1.8%</p>
