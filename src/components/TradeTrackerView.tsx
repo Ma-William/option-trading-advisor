@@ -763,42 +763,42 @@ const portfolioStats = [
   {
     title: "Total Trades",
     value: "50",
-    change: "+50 this month",
+    change: "",
     icon: Target,
     color: "text-blue-600"
   },
   {
     title: "Win Rate",
-    value: "78%",
-    change: "+8% vs last month",
+    value: "86%",
+    change: "",
     icon: TrendingUp,
     color: "text-green-600"
   },
   {
     title: "Average ROI",
-    value: "42.3%",
-    change: "+12.1% this month",
+    value: "53.3%",
+    change: "",
     icon: Percent,
     color: "text-green-600"
   },
   {
     title: "Volatility",
-    value: "6.2%",
-    change: "+0.8% this month",
+    value: "71.1%",
+    change: "",
     icon: Activity,
     color: "text-yellow-600"
   },
   {
     title: "Sharpe Ratio",
-    value: "2.14",
-    change: "+0.16 this month",
+    value: "2.58",
+    change: "",
     icon: TrendingUp,
     color: "text-blue-600"
   },
   {
     title: "Max Drawdown",
-    value: "7.1%",
-    change: "-12.2% this month",
+    value: "−19.7%",
+    change: "",
     icon: TrendingDown,
     color: "text-red-600"
   }
@@ -943,7 +943,6 @@ export function TradeTrackerView() {
                 <div>
                   <p className="text-sm font-medium text-slate-400">{stat.title}</p>
                   <p className="text-2xl font-bold text-slate-100 mt-1">{stat.value}</p>
-                  <p className="text-xs text-slate-500 mt-1">{stat.change}</p>
                 </div>
                 <div className={`p-3 rounded-lg bg-slate-700 ${stat.color}`}>
                   <stat.icon className="w-5 h-5" />

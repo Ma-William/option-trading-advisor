@@ -44,43 +44,43 @@ const upcomingEarnings = [
 const portfolioStats = [
   {
     title: "Total Trades",
-    value: "47",
-    change: "+12 this month",
+    value: "50",
+    change: "",
     icon: Target,
     color: "text-blue-600"
   },
   {
     title: "Win Rate",
-    value: "52%",
-    change: "+5% vs last month",
+    value: "86%",
+    change: "",
     icon: TrendingUp,
     color: "text-green-600"
   },
   {
-    title: "ROI",
-    value: "12.4%",
-    change: "+3.2% this month",
+    title: "Average ROI",
+    value: "53.3%",
+    change: "",
     icon: Percent,
     color: "text-green-600"
   },
   {
     title: "Volatility",
-    value: "5.8%",
-    change: "+1.1% this month",
+    value: "71.1%",
+    change: "",
     icon: Activity,
     color: "text-yellow-600"
   },
   {
     title: "Sharpe Ratio",
-    value: "1.98",
-    change: "+0.12 this month",
+    value: "2.58",
+    change: "",
     icon: TrendingUp,
     color: "text-blue-600"
   },
   {
     title: "Max Drawdown",
-    value: "22.56%",
-    change: "+2.3% this month",
+    value: "−19.7%",
+    change: "",
     icon: TrendingDown,
     color: "text-red-600"
   }
@@ -135,7 +135,6 @@ export function Dashboard() {
                 <div>
                   <p className="text-sm font-medium text-slate-400">{stat.title}</p>
                   <p className="text-2xl font-bold text-slate-100 mt-1">{stat.value}</p>
-                  <p className="text-xs text-slate-500 mt-1">{stat.change}</p>
                 </div>
                 <div className={`p-3 rounded-lg bg-slate-700 ${stat.color}`}>
                   <stat.icon className="w-5 h-5" />
