@@ -12,10 +12,9 @@ const mockOpportunities = [
     ticker: "TSLA",
     companyName: "Tesla Inc.",
     eventType: "Earnings",
-    eventDate: "2025-07-10",
-    eventDescription: "Q2 2025 earnings report expected to show delivery numbers and guidance updates",
+    eventDate: "2025-07-23",
+    eventDescription: "Q2 2025 earnings announcement. Expected to report on vehicle deliveries, energy storage deployments, and FSD progress.",
     currentPrice: 248.50,
-    impliedVolatility: 85,
     expectedMove: "8.2%",
     recommendingModels: ["AdaBoost", "Decision Tree", "Hist Gradient Boosting", "K Means", "Linear Regression", "Logistic Regression"],
     recommendation: "Strongly Recommended",
@@ -31,17 +30,16 @@ const mockOpportunities = [
   {
     ticker: "AAPL",
     companyName: "Apple Inc.",
-    eventType: "Product Launch",
-    eventDate: "2025-07-12",
-    eventDescription: "iPhone 16 Pro launch event with new AI features announcement",
+    eventType: "Earnings",
+    eventDate: "2025-07-25",
+    eventDescription: "Q2 2025 earnings announcement. Focus on iPhone sales, Services revenue growth, and AI integration progress.",
     currentPrice: 192.80,
-    impliedVolatility: 42,
     expectedMove: "4.1%",
     recommendingModels: ["K Means", "Linear Regression", "Logistic Regression", "Neural Network", "Random Forest", "SVR", "XGBoost"],
     recommendation: "Strongly Recommended",
     strategy: {
-      name: "Iron Condor",
-      description: "Sell ATM straddle, Buy OTM strangle",
+      name: "Calendar Spread",
+      description: "Sell 7-day ATM call, Buy 30-day ATM call",
       netDebit: 1.85,
       maxLoss: 1.85,
       maxProfit: 8.15,
@@ -51,15 +49,40 @@ const mockOpportunities = [
   {
     ticker: "NVDA",
     companyName: "NVIDIA Corporation",
-    eventType: "Conference Call",
-    eventDate: "2025-07-14",
-    eventDescription: "AI chip demand and data center growth discussion",
+    eventType: "Earnings",
+    eventDate: "2025-07-28",
+    eventDescription: "Q2 2025 earnings announcement. Expected discussion on AI chip demand, data center growth, and gaming segment performance.",
     currentPrice: 875.30,
-    impliedVolatility: 78,
     expectedMove: "9.5%",
     recommendingModels: ["K Means", "Linear Regression"],
     recommendation: "Considered",
-    strategy: null
+    strategy: {
+      name: "Calendar Spread",
+      description: "Sell 7-day ATM call, Buy 30-day ATM call",
+      netDebit: 3.20,
+      maxLoss: 3.20,
+      maxProfit: 15.80,
+      winRate: 65
+    }
+  },
+  {
+    ticker: "AMZN",
+    companyName: "Amazon.com Inc.",
+    eventType: "Earnings",
+    eventDate: "2025-07-30",
+    eventDescription: "Q2 2025 earnings announcement. Focus on AWS growth, retail margins, and advertising revenue expansion.",
+    currentPrice: 145.80,
+    expectedMove: "6.8%",
+    recommendingModels: ["AdaBoost", "Random Forest", "XGBoost"],
+    recommendation: "Considered",
+    strategy: {
+      name: "Calendar Spread",
+      description: "Sell 7-day ATM call, Buy 30-day ATM call",
+      netDebit: 3.20,
+      maxLoss: 3.20,
+      maxProfit: 15.80,
+      winRate: 65
+    }
   }
 ];
 
@@ -100,6 +123,12 @@ export function AlertsView() {
       day: 'numeric',
       year: 'numeric'
     });
+  };
+
+  const getNextTradingDate = (eventDate: string) => {
+    const date = new Date(eventDate);
+    date.setDate(date.getDate() + 1);
+    return formatDate(date.toISOString().split('T')[0]);
   };
 
   return (
@@ -188,6 +217,71 @@ export function AlertsView() {
                         ) : (
                           <p className="text-slate-400 text-sm">No strategy recommended</p>
                         )}
+                      </div>
+                    </div>
+
+                    {/* Trade Setup Details */}
+                    <div className="pt-4 border-t border-slate-600">
+                      <h4 className="text-slate-200 font-medium mb-3">Trade Setup</h4>
+                      
+                      {/* Entry Details */}
+                      <div className="mb-4">
+                        <div className="flex justify-between items-center mb-2">
+                          <h5 className="text-slate-300 font-medium">Entry Date: {formatDate(opportunity.eventDate)}</h5>
+                        </div>
+                        <div className="bg-slate-800 rounded p-3">
+                          <div className="grid grid-cols-5 gap-2 text-xs font-medium text-slate-400 mb-2">
+                            <div>Leg</div>
+                            <div>Action</div>
+                            <div>Option Type</div>
+                            <div>Strike</div>
+                            <div>Expiration</div>
+                          </div>
+                          <div className="grid grid-cols-5 gap-2 text-xs text-slate-300 mb-1">
+                            <div>1</div>
+                            <div>Sell</div>
+                            <div>Call (ATM)</div>
+                            <div>ATM</div>
+                            <div>Nearest (Earnings Week)</div>
+                          </div>
+                          <div className="grid grid-cols-5 gap-2 text-xs text-slate-300">
+                            <div>2</div>
+                            <div>Buy</div>
+                            <div>Call (ATM)</div>
+                            <div>ATM</div>
+                            <div>+30 Days</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Exit Details */}
+                      <div>
+                        <div className="flex justify-between items-center mb-2">
+                          <h5 className="text-slate-300 font-medium">Exit Date: {getNextTradingDate(opportunity.eventDate)}</h5>
+                        </div>
+                        <div className="bg-slate-800 rounded p-3">
+                          <div className="grid grid-cols-5 gap-2 text-xs font-medium text-slate-400 mb-2">
+                            <div>Leg</div>
+                            <div>Action</div>
+                            <div>Option Type</div>
+                            <div>Strike</div>
+                            <div>Expiration</div>
+                          </div>
+                          <div className="grid grid-cols-5 gap-2 text-xs text-slate-300 mb-1">
+                            <div>1</div>
+                            <div>Buy</div>
+                            <div>Call (ATM)</div>
+                            <div>ATM</div>
+                            <div>Nearest (Earnings Week)</div>
+                          </div>
+                          <div className="grid grid-cols-5 gap-2 text-xs text-slate-300">
+                            <div>2</div>
+                            <div>Sell</div>
+                            <div>Call (ATM)</div>
+                            <div>ATM</div>
+                            <div>+30 Days</div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     
