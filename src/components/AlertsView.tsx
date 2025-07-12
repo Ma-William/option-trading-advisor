@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -185,7 +184,6 @@ export function AlertsView() {
                         <p className="text-slate-300 text-sm mb-1">
                           {opportunity.eventType} • {formatDate(opportunity.eventDate)}
                         </p>
-                        <p className="text-slate-400 text-sm">{opportunity.eventDescription}</p>
                       </div>
                       
                       <div>
@@ -197,21 +195,6 @@ export function AlertsView() {
                               <Badge className="bg-green-600/20 text-green-400 border-green-600/30">
                                 {opportunity.strategy.winRate}% Win Rate
                               </Badge>
-                            </div>
-                            <p className="text-slate-400 text-sm">{opportunity.strategy.description}</p>
-                            <div className="grid grid-cols-3 gap-2 text-xs">
-                              <div>
-                                <p className="text-slate-500">Net Debit</p>
-                                <p className="text-slate-300">${opportunity.strategy.netDebit}</p>
-                              </div>
-                              <div>
-                                <p className="text-slate-500">Max Loss</p>
-                                <p className="text-red-400">${opportunity.strategy.maxLoss}</p>
-                              </div>
-                              <div>
-                                <p className="text-slate-500">Max Profit</p>
-                                <p className="text-green-400">${opportunity.strategy.maxProfit}</p>
-                              </div>
                             </div>
                           </div>
                         ) : (
