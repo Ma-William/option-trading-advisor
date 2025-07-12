@@ -20,6 +20,7 @@ interface Opportunity {
   eventDate: string;
   eventDescription: string;
   currentPrice: number;
+  impliedVolatility: number;
   strategy: Strategy | null;
   recommendation: string;
   recommendingModels: string[];
@@ -110,6 +111,13 @@ export function OpportunityCard({ opportunity, onSetAlert, isAlertSet = false }:
             </div>
           </div>
         )}
+        
+        <div className="grid grid-cols-1 gap-4 pt-2 border-t border-slate-700">
+          <div>
+            <p className="text-slate-400 text-xs">Implied Volatility</p>
+            <p className="text-slate-200 font-medium">{opportunity.impliedVolatility}%</p>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
