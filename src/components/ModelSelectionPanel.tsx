@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -115,7 +114,6 @@ type SortKey = keyof ModelData;
 type SortDirection = 'asc' | 'desc' | null;
 
 export function ModelSelectionPanel() {
-  // Initialize selected models from localStorage
   const getInitialSelectedModels = () => {
     try {
       const saved = localStorage.getItem('selectedModels');
@@ -191,7 +189,6 @@ export function ModelSelectionPanel() {
     }
     
     setSelectedModels(newSelectedModels);
-    // Save to localStorage immediately
     localStorage.setItem('selectedModels', JSON.stringify(newSelectedModels));
   };
 
@@ -215,7 +212,6 @@ export function ModelSelectionPanel() {
       return;
     }
 
-    // Save to localStorage
     localStorage.setItem('selectedModels', JSON.stringify(selectedModels));
     
     toast({
@@ -225,26 +221,21 @@ export function ModelSelectionPanel() {
   };
 
   return (
-    <div className="w-full h-full">
-      <Card className="bg-slate-800 border-slate-700 w-full">
-        <CardHeader>
-          <CardTitle className="text-slate-100 text-2xl">Model Selection Panel</CardTitle>
-          <CardDescription className="text-slate-300">
-            Configure AI models for option strategy recommendations. Select 3-10 models to use in the majority voting system.
-          </CardDescription>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4">
-            <div className="text-sm text-slate-400">
-              Selected: {selectedModels.length}/10 models (minimum 3 required)
-            </div>
-            <Button 
-              onClick={saveConfiguration}
-              disabled={selectedModels.length < 3}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              Save Configuration
-            </Button>
-          </div>
-        </CardHeader>
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="text-sm text-slate-400">
+          Selected: {selectedModels.length}/10 models (minimum 3 required)
+        </div>
+        <Button 
+          onClick={saveConfiguration}
+          disabled={selectedModels.length < 3}
+          className="bg-blue-600 hover:bg-blue-700 text-white"
+        >
+          Save Configuration
+        </Button>
+      </div>
+
+      <Card className="bg-slate-800 border-slate-700">
         <CardContent className="p-0 sm:p-6">
           <div className="overflow-auto max-h-[calc(100vh-300px)]">
             <Table>
@@ -343,18 +334,18 @@ export function ModelSelectionPanel() {
               </TableBody>
             </Table>
           </div>
-
-          <div className="mt-6 p-4 bg-slate-700/50 rounded-lg border border-slate-600">
-            <h3 className="text-slate-200 font-semibold mb-2">Recommendation System</h3>
-            <div className="text-sm text-slate-300 space-y-1">
-              <div><span className="text-green-400 font-medium">Strongly Recommended:</span> ≥60% of selected models agree</div>
-              <div><span className="text-blue-400 font-medium">Recommended:</span> 50-59% of selected models agree</div>
-              <div><span className="text-yellow-400 font-medium">Considered:</span> 40-49% of selected models agree</div>
-              <div><span className="text-slate-400 font-medium">Not Considered:</span> &lt;40% of selected models agree</div>
-            </div>
-          </div>
         </CardContent>
       </Card>
+
+      <div className="p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+        <h3 className="text-slate-200 font-semibold mb-2">Recommendation System</h3>
+        <div className="text-sm text-slate-300 space-y-1">
+          <div><span className="text-green-400 font-medium">Strongly Recommended:</span> ≥60% of selected models agree</div>
+          <div><span className="text-blue-400 font-medium">Recommended:</span> 50-59% of selected models agree</div>
+          <div><span className="text-yellow-400 font-medium">Considered:</span> 40-49% of selected models agree</div>
+          <div><span className="text-slate-400 font-medium">Not Considered:</span> &lt;40% of selected models agree</div>
+        </div>
+      </div>
     </div>
   );
 }
