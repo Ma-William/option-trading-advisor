@@ -192,9 +192,6 @@ export function AlertsView() {
                           <div className="space-y-2">
                             <div className="flex justify-between items-center">
                               <span className="text-slate-300 font-medium">{opportunity.strategy.name}</span>
-                              <Badge className="bg-green-600/20 text-green-400 border-green-600/30">
-                                {opportunity.strategy.winRate}% Win Rate
-                              </Badge>
                             </div>
                           </div>
                         ) : (
