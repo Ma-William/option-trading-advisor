@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TickerSelector } from "@/components/TickerSelector";
@@ -11,7 +10,7 @@ const mockOpportunities = [
   {
     ticker: "TSLA",
     companyName: "Tesla Inc.",
-    eventType: "Earnings",
+    eventType: "Earnings", 
     eventDate: "2025-07-23",
     eventDescription: "Q2 2025 earnings announcement. Expected to report on vehicle deliveries, energy storage deployments, and FSD progress.",
     currentPrice: 248.50,
@@ -19,7 +18,7 @@ const mockOpportunities = [
     recommendation: "Strongly Recommended", // 6/10 = 60%
     strategy: {
       name: "Calendar Spread",
-      description: "Sell 7-day ATM call, Buy 30-day ATM call",
+      description: "Calendar Spread",
       netDebit: 2.45,
       maxLoss: 2.45,
       maxProfit: 12.55,
@@ -30,14 +29,14 @@ const mockOpportunities = [
     ticker: "AAPL",
     companyName: "Apple Inc.",
     eventType: "Earnings",
-    eventDate: "2025-07-25",
+    eventDate: "2025-07-25", 
     eventDescription: "Q2 2025 earnings announcement. Focus on iPhone sales, Services revenue growth, and AI integration progress.",
     currentPrice: 192.80,
     recommendingModels: ["K Means", "Linear Regression", "Logistic Regression", "Neural Network", "Random Forest", "SVR", "XGBoost"],
     recommendation: "Strongly Recommended", // 7/10 = 70%
     strategy: {
       name: "Calendar Spread",
-      description: "Sell 7-day ATM call, Buy 30-day ATM call",
+      description: "Calendar Spread",
       netDebit: 1.85,
       maxLoss: 1.85,
       maxProfit: 8.15,
@@ -55,7 +54,7 @@ const mockOpportunities = [
     recommendation: "Considered", // 2/10 = 20%
     strategy: {
       name: "Calendar Spread",
-      description: "Sell 7-day ATM call, Buy 30-day ATM call",
+      description: "Calendar Spread",
       netDebit: 3.20,
       maxLoss: 3.20,
       maxProfit: 15.80,
@@ -73,7 +72,7 @@ const mockOpportunities = [
     recommendation: "Considered", // 3/10 = 30%
     strategy: {
       name: "Calendar Spread",
-      description: "Sell 7-day ATM call, Buy 30-day ATM call",
+      description: "Calendar Spread",
       netDebit: 3.20,
       maxLoss: 3.20,
       maxProfit: 15.80,
