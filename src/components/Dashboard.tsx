@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Calendar, TrendingUp, Target, ChevronRight, Percent, Activity, TrendingDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -925,7 +926,7 @@ export function Dashboard() {
           <Card className="card-shadow bg-slate-800 border-slate-700">
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-semibold text-slate-100">🔥 Trade Opportunities This Week</CardTitle>
+                <CardTitle className="text-lg font-semibold text-slate-100">🔥 Trade Opportunities – Next Two Weeks</CardTitle>
                 <Link to="/opportunities">
                   <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
                     View All <ChevronRight className="w-4 h-4 ml-1" />
@@ -947,8 +948,8 @@ export function Dashboard() {
                   >
                     {filter === "all" ? "All" : 
                      filter === "strongly-recommended" ? "Strongly Recommended" :
-                     filter === "recommended+" ? "Recommended+" :
-                     "Considered+"}
+                     filter === "recommended+" ? "Recommended +" :
+                     "Considered +"}
                   </Button>
                 ))}
               </div>
