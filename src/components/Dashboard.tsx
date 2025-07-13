@@ -58,8 +58,8 @@ const portfolioStats = [
     color: "text-green-600"
   },
   {
-    title: "Average ROI",
-    value: "53.3%",
+    title: "Average ROI (After Fees)",
+    value: "52.8%",
     change: "",
     icon: Percent,
     color: "text-green-600"

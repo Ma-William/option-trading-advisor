@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -759,6 +760,22 @@ const mockHistoricalTrades = [
   }
 ];
 
+// Calculate ROI after fees: (Exit Proceeds - 0.0025*2) / (Entry Cost + 0.0025*2) - 1
+const calculateRoiAfterFees = (exitProceeds: number, entryCost: number) => {
+  const exitAfterFees = exitProceeds - (0.0025 * 2);
+  const entryAfterFees = entryCost + (0.0025 * 2);
+  return (exitAfterFees / entryAfterFees) - 1;
+};
+
+// Sort trades from most recent to oldest
+const sortedTrades = [...mockHistoricalTrades].sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime());
+
+// Calculate average ROI after fees
+const calculateAverageRoiAfterFees = () => {
+  const totalRoi = sortedTrades.reduce((sum, trade) => sum + calculateRoiAfterFees(trade.exitProceeds, trade.entryCost), 0);
+  return (totalRoi / sortedTrades.length) * 100;
+};
+
 const portfolioStats = [
   {
     title: "Total Trades",
@@ -775,8 +792,8 @@ const portfolioStats = [
     color: "text-green-600"
   },
   {
-    title: "Average ROI",
-    value: "53.3%",
+    title: "Average ROI (After Fees)",
+    value: `${calculateAverageRoiAfterFees().toFixed(1)}%`,
     change: "",
     icon: Percent,
     color: "text-green-600"
@@ -810,6 +827,8 @@ const StrategyModal = ({ trade }: { trade: any }) => {
     if (roi < 0) return "text-red-400";
     return "text-slate-400";
   };
+
+  const roiAfterFees = calculateRoiAfterFees(trade.exitProceeds, trade.entryCost);
 
   return (
     <DialogContent className="max-w-4xl bg-slate-800 border-slate-700">
@@ -887,7 +906,7 @@ const StrategyModal = ({ trade }: { trade: any }) => {
           <h3 className="text-lg font-semibold text-slate-100 mb-4">Summary</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-slate-700 p-4 rounded-lg">
-              <div className="text-sm text-slate-400 mb-1">Entry Cost</div>
+              <div className="text-sm text-slate-400 mb-1">Entry Costs</div>
               <div className="text-lg font-semibold text-slate-100">${trade.entryCost}</div>
             </div>
             <div className="bg-slate-700 p-4 rounded-lg">
@@ -895,9 +914,9 @@ const StrategyModal = ({ trade }: { trade: any }) => {
               <div className="text-lg font-semibold text-slate-100">${trade.exitProceeds}</div>
             </div>
             <div className="bg-slate-700 p-4 rounded-lg">
-              <div className="text-sm text-slate-400 mb-1">ROI</div>
-              <div className={`text-lg font-semibold ${getRoiColor(trade.pctReturn)}`}>
-                {trade.pctReturn > 0 ? '+' : ''}{(trade.pctReturn * 100).toFixed(1)}%
+              <div className="text-sm text-slate-400 mb-1">ROI (After Fees)</div>
+              <div className={`text-lg font-semibold ${getRoiColor(roiAfterFees)}`}>
+                {roiAfterFees > 0 ? '+' : ''}{(roiAfterFees * 100).toFixed(1)}%
               </div>
             </div>
           </div>
@@ -970,58 +989,61 @@ export function TradeTrackerView() {
                   <th className="text-left py-3 px-4 text-slate-200 font-medium">Strategy</th>
                   <th className="text-left py-3 px-4 text-slate-200 font-medium">Event Date</th>
                   <th className="text-left py-3 px-4 text-slate-200 font-medium">Entry/Exit</th>
-                  <th className="text-left py-3 px-4 text-slate-200 font-medium">ROI</th>
+                  <th className="text-left py-3 px-4 text-slate-200 font-medium">ROI (After Fees)</th>
                   <th className="text-left py-3 px-4 text-slate-200 font-medium">Status</th>
                   <th className="text-left py-3 px-4 text-slate-200 font-medium">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {mockHistoricalTrades.map((trade) => (
-                  <tr key={trade.id} className="border-b border-slate-700 hover:bg-slate-700/30">
-                    <td className="py-3 px-4">
-                      <div className="font-medium text-slate-100">{trade.ticker}</div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="text-slate-300">
-                        <div>Calendar Spread</div>
-                        <div className="text-xs text-slate-500">Earnings</div>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-slate-300">{formatDate(trade.eventDate)}</td>
-                    <td className="py-3 px-4">
-                      <div className="text-slate-300">
-                        <div className="text-sm">Entry: {formatDate(trade.entryDate)}</div>
-                        <div className="text-xs text-slate-500">Exit: {formatDate(trade.exitDate)}</div>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <span className={`font-medium ${getRoiColor(trade.pctReturn)}`}>
-                        {trade.pctReturn > 0 ? '+' : ''}{(trade.pctReturn * 100).toFixed(1)}%
-                      </span>
-                    </td>
-                    <td className="py-3 px-4">
-                      <Badge variant="outline" className="bg-slate-700 text-slate-300 border-slate-600">
-                        {trade.status}
-                      </Badge>
-                    </td>
-                    <td className="py-3 px-4">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="border-slate-600 text-slate-300 hover:bg-slate-700"
-                            onClick={() => setSelectedTrade(trade)}
-                          >
-                            <Eye className="w-4 h-4 mr-1" />
-                            View Strategy
-                          </Button>
-                        </DialogTrigger>
-                        <StrategyModal trade={trade} />
-                      </Dialog>
-                    </td>
-                  </tr>
-                ))}
+                {sortedTrades.map((trade) => {
+                  const roiAfterFees = calculateRoiAfterFees(trade.exitProceeds, trade.entryCost);
+                  return (
+                    <tr key={trade.id} className="border-b border-slate-700 hover:bg-slate-700/30">
+                      <td className="py-3 px-4">
+                        <div className="font-medium text-slate-100">{trade.ticker}</div>
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="text-slate-300">
+                          <div>Calendar Spread</div>
+                          <div className="text-xs text-slate-500">Earnings</div>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4 text-slate-300">{formatDate(trade.eventDate)}</td>
+                      <td className="py-3 px-4">
+                        <div className="text-slate-300">
+                          <div className="text-sm">Entry: {formatDate(trade.entryDate)}</div>
+                          <div className="text-xs text-slate-500">Exit: {formatDate(trade.exitDate)}</div>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className={`font-medium ${getRoiColor(roiAfterFees)}`}>
+                          {roiAfterFees > 0 ? '+' : ''}{(roiAfterFees * 100).toFixed(1)}%
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <Badge variant="outline" className="bg-slate-700 text-slate-300 border-slate-600">
+                          {trade.status}
+                        </Badge>
+                      </td>
+                      <td className="py-3 px-4">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="border-slate-600 text-slate-300 hover:bg-slate-700"
+                              onClick={() => setSelectedTrade(trade)}
+                            >
+                              <Eye className="w-4 h-4 mr-1" />
+                              View Strategy
+                            </Button>
+                          </DialogTrigger>
+                          <StrategyModal trade={trade} />
+                        </Dialog>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
